@@ -1,19 +1,9 @@
 import React from 'react';
 
-const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-]
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 export default function NavBar() {
     return (
-        <nav className="flex p-2 justify-around font-medium">
+        <nav className="flex p-2 justify-around font-medium text-white">
             <div className='flex items-center'>
                 <a href='#id' className='bold block font-large'>AnimeGO</a>
             </div>
