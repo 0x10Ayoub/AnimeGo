@@ -4,7 +4,7 @@ import Home from './component/Home'
 
 function App() {
   return (
-    <div className="App bg-neutral-900">
+    <div className="App bg-gray-200">
       <Home />
     </div>
   );

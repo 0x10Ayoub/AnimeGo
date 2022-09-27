@@ -1,6 +1,6 @@
 
 
-export default function Episode ({title,cover}) {
+export default function SingleAnime ({title,cover}) {
 
     return(
         <div className="bg-blue-900 rounded-md h-72 w-full max-w-sm">

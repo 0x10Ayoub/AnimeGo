@@ -1,16 +1,17 @@
 import React from 'react'
 import NavBar from './NavBar';
 import TopFive from './TopFive';
-import NewEpisodes from './NewEpisodes';
-
+import TrendingNow from './TrendingNow';
+import FilterOption from './FilterOptions'
 
 function Home() {
 
     return (
-        <div className='lg:container m-auto '>
-            {/* <NavBar /> */}
+        <div className='m-auto '>
+            { <NavBar /> }
             <TopFive />
-            <NewEpisodes />
+            <FilterOption />
+            <TrendingNow />
         </div>
     )
 }
