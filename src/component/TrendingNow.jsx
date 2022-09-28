@@ -1,4 +1,4 @@
-
+import React from 'react'
 import { data } from "autoprefixer";
 import { useEffect, useState, } from "react"
 import SingleAnime from "./SingleAnime"
