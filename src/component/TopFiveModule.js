@@ -1,26 +1,26 @@
 
 export default async function GetTopFive() {
     var query = 
-`query ($page: Int, $perPage: Int) {
-    Page(page:$page	, perPage:$perPage){       
-        media(sort: TRENDING_DESC, type: ANIME, isAdult: false) {
-          id
-          title {
-            romaji
-            english
-            native
-            userPreferred
-          }
-          coverImage {
-            extraLarge
-            large
-            medium
-            color
-          }
+        `query ($page: Int, $perPage: Int) {
+            Page(page:$page	, perPage:$perPage){       
+                media(sort: TRENDING_DESC, type: ANIME, isAdult: false) {
+                id
+                title {
+                    romaji
+                    english
+                    native
+                    userPreferred
+                }
+                coverImage {
+                    extraLarge
+                    large
+                    medium
+                    color
+                }
+                }
+            }
         }
-      }
-}
-`;
+        `;
 
     var variables = {
         page: 1,
