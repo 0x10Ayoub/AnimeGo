@@ -54,3 +54,14 @@ nav.flex  div {
   sm:col-start-7 sm:row-start-3 sm:col-span-4 sm:row-span-2
   col-start-6 row-start-5  col-span-5 row-span-1
 }
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  @apply bg-transparent
+}
+.scroll::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-sky-800
+}

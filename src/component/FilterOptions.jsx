@@ -1,9 +1,11 @@
 import { useReducer } from "react"
 import OpenSearch from "./FilterOptions/OpenSearch"
-import {INITIAL_STATE,filterReducer,FilterTypes} from "./FilterReducer"
-export default function FilterOption()
-{
-    const [state,dispatchFilter] = useReducer(filterReducer,INITIAL_STATE);
+import { INITIAL_STATE, filterReducer, FilterTypes } from "./FilterReducer"
+import YearsFilter from "./FilterOptions/YearsFilter";
+
+
+export default function FilterOption() {
+    const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
     return (
         <div className="container  m-auto mt-10">
             <div>
@@ -14,7 +16,11 @@ export default function FilterOption()
                 <p>{FilterTypes.TAG + " : " + state.tag}</p>
                 <p>{FilterTypes.MEDIASTATUS + " : " + state.mediastatus}</p>
             </div>
-            <OpenSearch  dispatchFilter={dispatchFilter}/>
+            <div className="grid grid-cols-6  grid-rows-1">
+                <OpenSearch className="col-span-1 row-span-1 m-auto" dispatchFilter={dispatchFilter} />
+                <YearsFilter className="col-span-1 row-span-1 m-auto relative group" dispatchFilter={dispatchFilter} />
+            </div>
+
         </div>
     )
 }
