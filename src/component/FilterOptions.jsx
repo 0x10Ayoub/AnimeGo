@@ -17,8 +17,8 @@ export default function FilterOption() {
                 <p>{FilterTypes.MEDIASTATUS + " : " + state.mediastatus}</p>
             </div>
             <div className="grid grid-cols-6  grid-rows-1">
-                <OpenSearch className="col-span-1 row-span-1 m-auto" dispatchFilter={dispatchFilter} />
-                <YearsFilter className="col-span-1 row-span-1 m-auto relative group" dispatchFilter={dispatchFilter} />
+                <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} />
+                <YearsFilter className="col-span-1 row-span-1" FilterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
             </div>
 
         </div>
