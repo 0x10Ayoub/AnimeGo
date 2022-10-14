@@ -1,0 +1,10 @@
+src/
+ assets  
+ components
+ context
+ data
+ hooks
+ pages
+ utils
+
+every folder has it's own __test__ folder

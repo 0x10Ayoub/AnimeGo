@@ -1,7 +1,6 @@
 
 import React ,{useMemo} from "react";
-import SingleYear from "./SingleYear";
-import ActiveBadge from "./ActiveBadge";
+import SingleOption from "./SingleOption";
 
 function Dropdown({handleClick,yearFilter,selectedyear},ref) {
 
@@ -10,7 +9,7 @@ function Dropdown({handleClick,yearFilter,selectedyear},ref) {
         <div ref={ref} onClick={handleClick} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
             {
                 years.filter(y => (!yearFilter || (y + "").includes(yearFilter)))
-                    .map(y => <SingleYear key={y} value={y} ActiveBadge={Number(y) == Number(selectedyear) ? ActiveBadge : null} />)
+                    .map(y => <SingleOption key={y} value={y} isActiveBadge={Number(y) == Number(selectedyear)} />)
             }
         </div>
     )
@@ -29,6 +28,6 @@ function yearGenerator() {
 }
 
 
-const FilterDropdown = React.forwardRef(Dropdown) ;
+const YearFilterDropdown = React.forwardRef(Dropdown) ;
 
-export default FilterDropdown;
+export default YearFilterDropdown;

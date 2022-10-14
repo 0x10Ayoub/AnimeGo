@@ -1,10 +1,8 @@
-import { useState } from "react"
 import { FilterTypes } from "../FilterReducer";
 
 export default function OpenSearch({dispatchFilter,className}) {
 
-    function handleChange(e)
-    {
+    function handleChange(e) {
         dispatchFilter({type:FilterTypes.SEARCH,payload:e.target.value})
     }
 

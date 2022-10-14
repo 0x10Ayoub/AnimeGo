@@ -1,6 +1,6 @@
 import TopAnime from "./TopAnime"
 import { useEffect, useState } from 'react'
-import GetTopFive from "./TopFiveModule"
+import GetTopFive from "../api/TopFiveModule"
 
 
 

@@ -1,7 +1,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { joinClassName } from "../Utilities/Utilities";
-import FilterDropdown from "./FilterDropdown";
+import { joinClassName } from "../../utils/joinClassName";
+import YearFilterDropdown from "./YearFilterDropdown";
 
 export default function YearsFilter({ FilterType, dispatchFilter, state, className }) {
 
@@ -38,15 +38,17 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
         searchInputRef.current.value = value;
         SetDropDown(false);
     }
+
     function filterYear(e) {
         setYearFilter(e.target.value)
     }
+
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="years">Years</label>
             <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
-                <FilterDropdown ref={selectRef} handleClick={handleClick} yearFilter={yearFilter} selectedyear={state.year}/>
+                <YearFilterDropdown ref={selectRef} handleClick={handleClick} yearFilter={yearFilter} selectedyear={state.year}/>
             }
         </div>
 
