@@ -5,7 +5,6 @@ import { joinClassName } from "../../utils/joinClassName";
 import SingleOption from "./SingleOption";
 import { FilterTypes } from "../FilterReducer";
 
-
 export default function GenresFilter({dispatchFilter, state, className }) {
 
     const [dropDownActive, SetDropDown] = useState(false);
@@ -45,7 +44,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
                 SetDropDown(isDropdownActive);
                 if(!isDropdownActive && state.genres.length)
                 {
-                    //setGenresCollection("");
+                    //setGenresTagsSearch("");
                     //searchInputRef.current.value = state.year;
                 }
             }
@@ -57,26 +56,24 @@ export default function GenresFilter({dispatchFilter, state, className }) {
 
 
     function handleClick(e) {
-        console.log(state.genres)
-        let value = e.target.getAttribute("value");
-        console.log(e.target)
-         if(value === null || state.genres.includes(value) || state.tags.includes(value)) return;
-         if(genresCollection.includes(value))
-            dispatchFilter({ type: FilterTypes.GENRES, payload: value });
-         else
-            dispatchFilter({ type: FilterTypes.TAGS, payload: value });
+        let payload = e.target.getAttribute("value") || e.target.closest("span[value]").getAttribute("value",3);
+        if(payload === null) return;
+        let type = genresCollection.includes(payload) ? FilterTypes.GENRES : FilterTypes.TAGS; 
+        dispatchFilter({ type, payload });
         // searchInputRef.current.value = value;
-         SetDropDown(false);
+         //SetDropDown(false);
     }
 
     function filterYear(e) {
-        //setGenresTagsSearch(e.target.value)
+        setGenresTagsSearch(e.target.value)
     }
     
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="years">Genres</label>
-            <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+            <div className="relative">
+                <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+            </div>
             {dropDownActive &&
                 <div ref={selectRef} onClick={handleClick} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
                 <span className="block w-full font-bold text-left pl-6"> GENRES</span>
@@ -87,7 +84,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
                 <span className="block w-full font-bold text-left pl-6"> TAGS</span>
                 {
                     tagsCollection.filter(tags => (!genresTagsSearch || (tags.name).includes(genresTagsSearch)))
-                        .map(tags => <SingleOption key={tags.name} value={tags.name} isActiveBadge={genresTagsSearch.includes(tags.name)} />)
+                        .map(tags => <SingleOption key={tags.name} value={tags.name} isActiveBadge={state.tags.includes(tags.name)} />)
                 }
             </div>
             }

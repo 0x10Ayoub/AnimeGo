@@ -1,7 +1,9 @@
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
+import { useEffect, useRef, useState } from "react";
 import { joinClassName } from "../../utils/joinClassName";
-import YearFilterDropdown from "./YearFilterDropdown";
+import SingleOptionDropdown from "./SingleOptionDropDown"
+
 
 export default function YearsFilter({ FilterType, dispatchFilter, state, className }) {
 
@@ -48,13 +50,24 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
             <label className="block" htmlFor="years">Years</label>
             <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
-                <YearFilterDropdown ref={selectRef} handleClick={handleClick} yearFilter={yearFilter} selectedyear={state.year}/>
+                <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={yearFilter} selectedValue={state.year} GetData={yearGenerator}/>
             }
         </div>
 
     )
 }
 
+
+
+function yearGenerator() {
+    var startYear = 1950;
+    var endYear = new Date().getFullYear() + 1;
+    var res = new Array(endYear - startYear);
+    for (let i = endYear, k = 0; i >= startYear; i--) {
+        res[k++] = i;
+    }
+    return res;
+}
 
 
 

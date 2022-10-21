@@ -23,9 +23,10 @@ export default async function getGenresCollection() {
             })
         };
 
-    return await fetch(url, options).then(handleResponse)
-        .then(handleData)
-        .catch(handleError);
+    return await fetch(url, options)
+                .then(handleResponse)
+                .then(handleData)
+                .catch(handleError);
 
     function handleResponse(response) {
         return response.json();

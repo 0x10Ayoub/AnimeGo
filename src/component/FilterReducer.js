@@ -1,3 +1,5 @@
+import { cloneElement } from "react";
+
 const FilterTypes =Object.freeze( {
     SEARCH:"SEARCH",
     YEAR:"YEAR",
@@ -20,17 +22,21 @@ let INITIAL_STATE = {
 
 function updateCollection(collection,value){
     if(!collection.includes(value))
-        collection.push(value);
+        collection.push(value)
+    else 
+        collection.splice(collection.indexOf(value),1)
     return collection;
 }
 const filterReducer = (state,action) => {
-
     const filter = action.type.toLowerCase();
-        if( action.type == FilterTypes.GENRES || action.type == FilterTypes.TAGS)
+        if( action.type == FilterTypes.GENRES || action.type == FilterTypes.TAGS) {
+            let collection = updateCollection(state[filter],action.payload); 
             return {
-                    ...state,
-                    [filter]:updateCollection(state[filter],action.payload)
-                    }
+                ...state,
+                [filter]: collection
+            }
+        }
+            
         if(action.type == FilterTypes.SEARCH || action.type == FilterTypes.YEAR)
          return {
                 ...state,
