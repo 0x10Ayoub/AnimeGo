@@ -12,6 +12,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
     const [genresCollection,setGenresCollection] = useState(null);
     const [tagsCollection,setTagsCollection] = useState(null);
     const [tagsGenresSelection,setTagsGenresSelection] = useState([])
+    const [isSearchActive,setIsSearchAtive] = useState(false)
     const searchInputRef = useRef();
     const selectRef = useRef();
 
@@ -40,12 +41,16 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         document.addEventListener("mouseup", HandleDropDwon);
 
         function HandleDropDwon(e) {
-            if (!selectRef.current || !selectRef.current.contains(e.target))
+            let target = e.target;
+            if (!selectRef.current || !selectRef.current.contains(target))
             {
-                let isDropdownActive = e.target.isSameNode(searchInputRef.current);
+                let isDropdownActive = target.isSameNode(searchInputRef.current) || 
+                                    searchInputRef.current.parentNode === target.closest("div[data-value]")?.parentNode;
+                setIsSearchAtive(target.isSameNode(searchInputRef.current))
                 SetDropDown(isDropdownActive);
                 if(!isDropdownActive && state.genres.length)
                 {
+                    setIsSearchAtive(false);
                     //setGenresTagsSearch("");
                     //searchInputRef.current.value = state.year;
                 }
@@ -61,12 +66,16 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         let payload = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value",3);
         if(!payload) return;
         let type = genresCollection.includes(payload) ? FilterTypes.GENRES : FilterTypes.TAGS; 
+        
         dispatchFilter({ type, payload });
         if(tagsGenresSelection.includes(payload))
             setTagsGenresSelection([...tagsGenresSelection.filter(val => val !== payload)]);
         else
             setTagsGenresSelection([...tagsGenresSelection,payload]);
-        // searchInputRef.current.value = value;
+
+        searchInputRef.current.value = "";
+        setGenresTagsSearch("");
+        setIsSearchAtive(false);
          //SetDropDown(false);
     }
 
@@ -75,22 +84,24 @@ export default function GenresFilter({dispatchFilter, state, className }) {
     }
     
     return (
-        <div id="Year" className={joinClassName(className, "relative m-auto")}>
+        <div className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="Genres">Genres</label>
             <div className="relative">
                 <input ref={searchInputRef} type="search" autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
-                <BadgeCollection collection={tagsGenresSelection} />
+               {
+                    !isSearchActive && <BadgeCollection collection={tagsGenresSelection} onClick={handleClick} />
+                }
             </div>
             {dropDownActive &&
                 <div ref={selectRef} onClick={handleClick} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
                 <span className="block w-full font-bold text-left pl-6"> GENRES</span>
                 {
-                    genresCollection.filter(genre => (!genresTagsSearch || (genre + "").includes(genresTagsSearch)))
+                    genresCollection.filter(genre => (!genresTagsSearch || (genre).toLowerCase().includes(genresTagsSearch)))
                         .map((genre,index) => <SingleOption key={genre + index} value={genre} isActiveBadge={state.genres.includes(genre)} />)
                 }
                 <span className="block w-full font-bold text-left pl-6"> TAGS</span>
                 {
-                    tagsCollection.filter(tags => (!genresTagsSearch || (tags.name).includes(genresTagsSearch)))
+                    tagsCollection.filter(tags => (!genresTagsSearch || (tags.name).toLowerCase().includes(genresTagsSearch)))
                         .map(tags => <SingleOption key={tags.name} value={tags.name} isActiveBadge={state.tags.includes(tags.name)} />)
                 }
             </div>
