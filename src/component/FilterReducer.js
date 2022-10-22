@@ -4,7 +4,7 @@ const FilterTypes =Object.freeze( {
     SEARCH:"SEARCH",
     YEAR:"YEAR",
     SEASON:"SEASON",
-    FORMAT:"FORMAT",
+    FORMATS:"FORMATS",
     TAGS:"TAGS",
     GENRES:"GENRES",
     MEDIASTATUS:"MEDIASTATUS"
@@ -14,7 +14,7 @@ let INITIAL_STATE = {
     search:"",
     year: 0,
     season:"",
-    format:[],
+    formats:[],
     tags:[],
     genres:[],
     mediaStatus:""
@@ -29,7 +29,10 @@ function updateCollection(collection,value){
 }
 const filterReducer = (state,action) => {
     const filter = action.type.toLowerCase();
-        if( action.type == FilterTypes.GENRES || action.type == FilterTypes.TAGS) {
+        if( action.type == FilterTypes.GENRES || 
+            action.type == FilterTypes.TAGS || 
+            action.type == FilterTypes.FORMAT
+        ) {
             let collection = updateCollection(state[filter],action.payload); 
             return {
                 ...state,

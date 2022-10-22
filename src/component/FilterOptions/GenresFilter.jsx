@@ -51,8 +51,6 @@ export default function GenresFilter({dispatchFilter, state, className }) {
                 if(!isDropdownActive && state.genres.length)
                 {
                     setIsSearchAtive(false);
-                    //setGenresTagsSearch("");
-                    //searchInputRef.current.value = state.year;
                 }
             }
         }
@@ -97,12 +95,12 @@ export default function GenresFilter({dispatchFilter, state, className }) {
                 <span className="block w-full font-bold text-left pl-6"> GENRES</span>
                 {
                     genresCollection.filter(genre => (!genresTagsSearch || (genre).toLowerCase().includes(genresTagsSearch)))
-                        .map((genre,index) => <SingleOption key={genre + index} value={genre} isActiveBadge={state.genres.includes(genre)} />)
+                        .map((genre,index) => <SingleOption key={genre + index} value={genre} isActiveBadge={tagsGenresSelection.includes(genre)} />)
                 }
                 <span className="block w-full font-bold text-left pl-6"> TAGS</span>
                 {
                     tagsCollection.filter(tags => (!genresTagsSearch || (tags.name).toLowerCase().includes(genresTagsSearch)))
-                        .map(tags => <SingleOption key={tags.name} value={tags.name} isActiveBadge={state.tags.includes(tags.name)} />)
+                        .map(tags => <SingleOption key={tags.name} value={tags.name} isActiveBadge={tagsGenresSelection.includes(tags.name)} />)
                 }
             </div>
             }

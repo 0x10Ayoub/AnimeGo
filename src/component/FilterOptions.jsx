@@ -4,6 +4,7 @@ import { INITIAL_STATE, filterReducer, FilterTypes } from "./FilterReducer"
 import YearsFilter from "./filterOptions/YearsFilter";
 import GenresFilter from "./filterOptions/GenresFilter";
 import SeasonFilter from "./filterOptions/SeasonFilter";
+import FormatFilter from "./filterOptions/FormatFilter";
 
 
 export default function FilterOption() {
@@ -23,6 +24,7 @@ export default function FilterOption() {
                 <GenresFilter className="col-span-1 row-span-1" FilterType={FilterTypes.GENRE} dispatchFilter={dispatchFilter} state={state}/>
                 <YearsFilter className="col-span-1 row-span-1" FilterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
                 <SeasonFilter className="col-span-1 row-span-1" FilterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
+                <FormatFilter className="col-span-1 row-span-1" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state}/>
             </div>
 
         </div>
