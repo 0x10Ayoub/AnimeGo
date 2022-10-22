@@ -34,7 +34,7 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
 
 
     function handleClick(e) {
-        let value = e.target.getAttribute("value");
+        let value = e.target.getAttribute("value") || e.target.closest("span[value]").getAttribute("value");
         if(value === null) return;
         dispatchFilter({ type: FilterType, payload: value });
         searchInputRef.current.value = value;

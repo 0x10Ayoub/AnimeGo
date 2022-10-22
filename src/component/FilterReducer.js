@@ -37,7 +37,7 @@ const filterReducer = (state,action) => {
             }
         }
             
-        if(action.type == FilterTypes.SEARCH || action.type == FilterTypes.YEAR)
+        if(action.type in FilterTypes)
          return {
                 ...state,
                 [filter]:action.payload
