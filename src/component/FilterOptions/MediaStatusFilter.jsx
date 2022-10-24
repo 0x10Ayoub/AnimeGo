@@ -38,7 +38,7 @@ export default function MediaStatusFilter({ FilterType, dispatchFilter, state, c
                 if(!isDropdownActive && state.mediaStatus)
                 {
                     setMediaStatusFilter("");
-                    searchInputRef.current.value = state.mediaStatus;
+                    searchInputRef.current.value = state.mediaStatus?.toLowerCase().replace(RegExp("_","g")," ");
                 }
             }
         }
@@ -52,7 +52,7 @@ export default function MediaStatusFilter({ FilterType, dispatchFilter, state, c
         let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
         if(value === null) return;
         dispatchFilter({ type: FilterType, payload: value });
-        searchInputRef.current.value = value;
+        searchInputRef.current.value = value.toLowerCase().replace(RegExp("_","g")," ");
         SetDropDown(false);
     }
 
@@ -63,7 +63,7 @@ export default function MediaStatusFilter({ FilterType, dispatchFilter, state, c
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="mediaStatus">Airing Status</label>
-            <input ref={searchInputRef} type="search" autoComplete="off" name="mediaStatus" onChange={handleInputChange} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+            <input ref={searchInputRef} type="search" autoComplete="off" name="mediaStatus" onChange={handleInputChange} className="block  capitalize p-2  w-48 rounded outline-none bg-gray-100 text-primary-blue  drop-shadow-md" />
             {dropDownActive &&
                 <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={AiringFilter} selectedValue={state.mediaStatus} GetData={()=>MediaStatusCollection}/>
             }

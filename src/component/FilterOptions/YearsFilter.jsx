@@ -14,6 +14,8 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
 
 
     useEffect(() => {
+        if(state.year)
+            searchInputRef.current.value = state.year
         document.addEventListener("mouseup", HandleDropDwon);
         function HandleDropDwon(e) {
             if (!selectRef.current || !selectRef.current.contains(e.target))
@@ -34,8 +36,8 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
 
 
     function handleClick(e) {
-        let value = e.target.getAttribute("value") || e.target.closest("span[value]").getAttribute("value");
-        if(value === null) return;
+        let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
+        if(value === null || undefined) return;
         dispatchFilter({ type: FilterType, payload: value });
         searchInputRef.current.value = value;
         SetDropDown(false);
@@ -48,7 +50,7 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="years">Years</label>
-            <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+            <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
                 <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={yearFilter} selectedValue={state.year} GetData={yearGenerator}/>
             }

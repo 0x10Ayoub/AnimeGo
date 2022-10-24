@@ -4,7 +4,7 @@ import getFormats from "../../api/getFormats";
 import { joinClassName } from "../../utils/joinClassName";
 import SingleOption from "./SingleOption";
 import { FilterTypes } from "../FilterReducer";
-import BadgeCollection from "./BadgeCollection";
+import BadgeCollection from "./SingleBadgeCollection";
 
 export default function FormatFilter({dispatchFilter, state, className }) {
 
