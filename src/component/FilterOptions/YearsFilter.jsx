@@ -50,7 +50,7 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="years">Years</label>
-            <input ref={searchInputRef} type="search" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
+            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
                 <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={yearFilter} selectedValue={state.year} GetData={yearGenerator}/>
             }

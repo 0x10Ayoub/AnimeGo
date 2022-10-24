@@ -39,7 +39,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
 
     useEffect(() => {
         document.addEventListener("mouseup", HandleDropDwon);
-
+        searchInputRef.current.value = tagsGenresSelection.length ? " " : "";
         function HandleDropDwon(e) {
             let target = e.target;
             if (!selectRef.current || !selectRef.current.contains(target))
@@ -57,7 +57,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         return () => {
             document.removeEventListener("mouseup", HandleDropDwon);
         }
-    }, [dropDownActive,state.genres])
+    }, [dropDownActive,state.genres,state.tags,tagsGenresSelection.length])
 
 
     function handleClick(e) {
@@ -85,7 +85,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         <div className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="Genres">Genres</label>
             <div className="relative">
-                <input ref={searchInputRef} type="search" autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+                <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                {
                     !isSearchActive && <BadgeCollection collection={tagsGenresSelection} onClick={handleClick} />
                 }

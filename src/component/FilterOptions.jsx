@@ -5,7 +5,8 @@ import YearsFilter from "./filterOptions/YearsFilter";
 import GenresFilter from "./filterOptions/GenresFilter";
 import SeasonFilter from "./filterOptions/SeasonFilter";
 import FormatFilter from "./filterOptions/FormatFilter";
-import MediaStatusFilter from "./filterOptions/MediaStatusFilter";
+import StatusFilter from "./filterOptions/StatusFilter";
+import FilterTagsCollection from "./filterOptions/FilterTagsCollection";
 
 export default function FilterOption() {
     const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
@@ -18,7 +19,7 @@ export default function FilterOption() {
                 <p>{FilterTypes.GENRES + " : " + state.genres.join(',')}</p>
                 <p>{FilterTypes.TAGS + " : " + state.tags.join(',')}</p>
                 <p>{FilterTypes.FORMATS + " : " + state.formats.join(',')}</p>
-                <p>{FilterTypes.MEDIASTATUS + " : " + state.mediastatus}</p>
+                <p>{FilterTypes.MEDIASTATUS + " : " + state.status}</p>
             </div>
             <div className="grid grid-cols-6  grid-rows-1">
                 <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} />
@@ -26,9 +27,9 @@ export default function FilterOption() {
                 <YearsFilter className="col-span-1 row-span-1" FilterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
                 <SeasonFilter className="col-span-1 row-span-1" FilterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
                 <FormatFilter className="col-span-1 row-span-1" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state}/>
-                <MediaStatusFilter className="col-span-1 row-span-1" FilterType={FilterTypes.MEDIASTATUS} dispatchFilter={dispatchFilter} state={state}/>
+                <StatusFilter className="col-span-1 row-span-1" FilterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state}/>
             </div>
-
+            <FilterTagsCollection  FilterType={""} dispatchFilter={dispatchFilter} state={state}/>
         </div>
     )
 }

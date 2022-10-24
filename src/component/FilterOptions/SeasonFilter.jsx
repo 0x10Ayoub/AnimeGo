@@ -33,7 +33,7 @@ export default function SeasonFilter({ FilterType, dispatchFilter, state, classN
 
     function handleClick(e) {
         let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
-        if(value === null) return;
+        if(value === null || value === undefined  ) return;
         dispatchFilter({ type: FilterType, payload: value });
         if(!state.year)
             dispatchFilter({ type: FilterTypes.YEAR, payload: new Date().getFullYear().toString() });
@@ -48,7 +48,7 @@ export default function SeasonFilter({ FilterType, dispatchFilter, state, classN
     return (
         <div id="Year" className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="season">Season</label>
-            <input ref={searchInputRef} type="search" autoComplete="off" name="season" onChange={SetSeasonFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
+            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={SetSeasonFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
                 <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={seasonFilter} selectedValue={state.season} GetData={GetSeason}/>
             }

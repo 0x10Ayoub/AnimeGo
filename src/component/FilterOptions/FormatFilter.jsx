@@ -35,23 +35,24 @@ export default function FormatFilter({dispatchFilter, state, className }) {
 
     useEffect(() => {
         document.addEventListener("mouseup", HandleDropDwon);
+        searchInputRef.current.value = formatsSeclection.length ? " " : "";
 
         function HandleDropDwon(e) {
             let target = e.target;
-            if (!selectRef.current || !selectRef.current.contains(target))
-            {
+            if (!selectRef.current || !selectRef.current.contains(target)) {
+                
                 let isDropdownActive = target.isSameNode(searchInputRef.current) || 
                                     searchInputRef.current.parentNode === target.closest("div[data-value]")?.parentNode;
                 setIsSearchAtive(target.isSameNode(searchInputRef.current))
                 SetDropDown(isDropdownActive);
-                if(!isDropdownActive && state.formats.length)
+                if(!isDropdownActive && state.formats.length) 
                     setIsSearchAtive(false);
             }
         }
         return () => {
             document.removeEventListener("mouseup", HandleDropDwon);
         }
-    }, [dropDownActive,state.formats])
+    }, [dropDownActive,state.formats,formatsSeclection.length])
 
 
     function handleClick(e) {
@@ -65,7 +66,6 @@ export default function FormatFilter({dispatchFilter, state, className }) {
         else
             setFormatsSeclection([...formatsSeclection,payload]);
 
-        searchInputRef.current.value = "";
         setFormatsInputSearch("");
         setIsSearchAtive(false);
          //SetDropDown(false);
@@ -79,7 +79,7 @@ export default function FormatFilter({dispatchFilter, state, className }) {
         <div className={joinClassName(className, "relative m-auto")}>
             <label className="block" htmlFor="Format">Format</label>
             <div className="relative">
-                <input ref={searchInputRef} type="search" autoComplete="off" name="Format" onChange={setFormatsSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+                <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="Format" onChange={setFormatsSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                {
                     !isSearchActive && <BadgeCollection collection={formatsSeclection} onClick={handleClick} />
                 }
