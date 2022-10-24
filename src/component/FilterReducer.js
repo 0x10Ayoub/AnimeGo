@@ -29,9 +29,9 @@ function updateCollection(collection,value){
 }
 const filterReducer = (state,action) => {
     const filter = action.type.toLowerCase();
-        if( action.type == FilterTypes.GENRES || 
-            action.type == FilterTypes.TAGS || 
-            action.type == FilterTypes.FORMAT
+        if( action.type === FilterTypes.GENRES || 
+            action.type === FilterTypes.TAGS || 
+            action.type === FilterTypes.FORMATS
         ) {
             let collection = updateCollection(state[filter],action.payload); 
             return {

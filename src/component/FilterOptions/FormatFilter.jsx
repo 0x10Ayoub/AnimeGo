@@ -45,11 +45,7 @@ export default function FormatFilter({dispatchFilter, state, className }) {
                 setIsSearchAtive(target.isSameNode(searchInputRef.current))
                 SetDropDown(isDropdownActive);
                 if(!isDropdownActive && state.formats.length)
-                {
                     setIsSearchAtive(false);
-                    //setGenresTagsSearch("");
-                    //searchInputRef.current.value = state.year;
-                }
             }
         }
         return () => {

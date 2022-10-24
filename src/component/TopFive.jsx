@@ -23,7 +23,7 @@ export default function TopFive() {
             return;
         }
         GetTopFive().then(data => {
-            dataTopFive = data?.Page?.media;
+           var dataTopFive = data?.Page?.media;
             localStorage.setItem("topfive", JSON.stringify(dataTopFive));
             SetAnimeData(data?.Page?.media)
         });
