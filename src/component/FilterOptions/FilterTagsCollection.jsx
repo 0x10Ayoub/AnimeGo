@@ -1,4 +1,5 @@
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTags } from '@fortawesome/free-solid-svg-icons'
 export default function FilterTagsCollection({dispatchFilter,state}){
 
     function handleClick(e) {
@@ -18,16 +19,16 @@ export default function FilterTagsCollection({dispatchFilter,state}){
 
 function mapWithKey(hash){
     var res  = [];
-    res.push(<span key="icons-data-badges">Icon</span>)
+    res.push(<span key="icons-data-badges" className="w-4 h-4" ><FontAwesomeIcon icon={faTags} className="text-gray-400 w-full h-full" /></span>)
     for(let key in hash){
        res.push( <SingeBadge key={key} value={key} type={hash[key]}/>)
     }
     return res;
 }
 
-function SingeBadge({key,value,type}){
+function SingeBadge({value,type}){
     return (
-    <span key={key} className="block rounded-md capitalize m-1 p-1 bg-primary-blue" type={type} value={value}>
+    <span  className="block rounded-md capitalize m-1 p-1 bg-primary-blue" type={type} value={value}>
         {
             value.replace(RegExp("_","g",)," ").toLowerCase()
         }
