@@ -22,7 +22,7 @@ export default function FilterOption() {
                 <p>{FilterTypes.STATUS + " : " + state.status}</p>
             </div>
             <div className="grid grid-cols-6  grid-rows-1">
-                <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} />
+                <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} state={state}/>
                 <GenresFilter className="col-span-1 row-span-1" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state}/>
                 <YearsFilter className="col-span-1 row-span-1" FilterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
                 <SeasonFilter className="col-span-1 row-span-1" FilterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>

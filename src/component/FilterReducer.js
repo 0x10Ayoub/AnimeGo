@@ -8,7 +8,7 @@ const FilterTypes =Object.freeze( {
     GENRES:"GENRES",
     STATUS:"STATUS",
 });
-
+const OperationTypes = {ADD:"ADD",DELETE:"DELETE"}
 let INITIAL_STATE = {
     search:"",
     year: 0,
@@ -71,4 +71,4 @@ function handleFilterCollection (state,action) {
         filterCollection.push(action.type);
 
 }
-export {INITIAL_STATE,FilterTypes,filterReducer};
+export {INITIAL_STATE,FilterTypes,OperationTypes,filterReducer};

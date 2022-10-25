@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import getGenresCollection from "../../api/getGenresCollection";
 import { joinClassName } from "../../utils/joinClassName";
 import SingleOption from "./SingleOption";
@@ -13,6 +13,8 @@ export default function GenresFilter({dispatchFilter, state, className }) {
     const [tagsCollection,setTagsCollection] = useState(null);
     const [tagsGenresSelection,setTagsGenresSelection] = useState([])
     const [isSearchActive,setIsSearchAtive] = useState(false)
+    const [collectionOrder,setCollectionOrder] = useState(["genres","tags"]);
+    const setCollectionOrderCallBack = useCallback(HandleTagesGenresSelection,[collectionOrder,state])
     const searchInputRef = useRef();
     const selectRef = useRef();
 
@@ -39,7 +41,10 @@ export default function GenresFilter({dispatchFilter, state, className }) {
 
     useEffect(() => {
         document.addEventListener("mouseup", HandleDropDwon);
+        
+        setTagsGenresSelection(setCollectionOrderCallBack(FilterTypes.GENRES));
         searchInputRef.current.value = tagsGenresSelection.length ? " " : "";
+
         function HandleDropDwon(e) {
             let target = e.target;
             if (!selectRef.current || !selectRef.current.contains(target))
@@ -57,7 +62,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         return () => {
             document.removeEventListener("mouseup", HandleDropDwon);
         }
-    }, [dropDownActive,state.genres,state.tags,tagsGenresSelection.length])
+    }, [dropDownActive,state.genres,state.tags,tagsGenresSelection.length,setCollectionOrderCallBack])
 
 
     function handleClick(e) {
@@ -66,10 +71,7 @@ export default function GenresFilter({dispatchFilter, state, className }) {
         let type = genresCollection.includes(payload) ? FilterTypes.GENRES : FilterTypes.TAGS; 
         
         dispatchFilter({ type, payload });
-        if(tagsGenresSelection.includes(payload))
-            setTagsGenresSelection([...tagsGenresSelection.filter(val => val !== payload)]);
-        else
-            setTagsGenresSelection([...tagsGenresSelection,payload]);
+        HandleTagesGenresSelection(type);
 
         searchInputRef.current.value = "";
         setGenresTagsSearch("");
@@ -77,6 +79,15 @@ export default function GenresFilter({dispatchFilter, state, className }) {
          //SetDropDown(false);
     }
 
+    function HandleTagesGenresSelection(type) {
+        const filter = type.toLowerCase();
+        console.log(filter)
+        if(state[filter].length === 0 && collectionOrder[0] === filter)
+            setCollectionOrder((arr)=>[arr[1],arr[0]])
+        if(state[filter].length !== 0 && collectionOrder[0] !== filter && state[collectionOrder[0]].length === 0)
+            setCollectionOrder((arr)=>[arr[1],arr[0]])
+        return [...state[collectionOrder[0]],...state[collectionOrder[1]]];
+    }
     function setTagsGenreSearch(e) {
         setGenresTagsSearch(e.target.value)
     }
