@@ -3,7 +3,7 @@ export default  function SingleOption({value,isActiveBadge})
 {
     return (
         <div   className="font-semibold  pl-3 pr-3">
-            <div className="flex justify-start capitalize  hover:cursor-pointer hover:text-cyan-400 hover:bg-slate-100 rounded">
+            <div className="flex justify-start capitalize  hover:cursor-pointer hover:text-primary-blue hover:bg-slate-100 rounded">
                 <span value={value} className="block mb-1 p-1 text-left pl-4 w-full h-full">{value?.toString().toLowerCase().replace("_"," ")}</span>
                 { isActiveBadge && <ActiveBadge value={value}/>}
             </div>

@@ -51,25 +51,24 @@ function updateCollection(collection,value){
         collection.splice(collection.indexOf(value),1)
     return collection;
 }
+
 function handleFilterCollection (state,action) {
-    const filter = action.type.toLowerCase();
-
-    let filterCollection = state.filterCollection;
-    if ( action.type === FilterTypes.GENRES || 
-        action.type === FilterTypes.TAGS || 
-        action.type === FilterTypes.FORMATS
-    ) {
-        if(filterCollection[action.payload])
-            delete filterCollection[action.payload]
-        else
-            filterCollection[action.payload] = action.type;
-        return
-    } 
-    console.log("something")
-     if(filterCollection[state[filter]]) 
-        delete filterCollection[state[filter]]
-    filterCollection[action.payload] = action.type;
-
     
+    const filter = action.type.toLowerCase();
+    let data = state[filter];
+    let filterCollection = state.filterCollection;
+
+    if ([FilterTypes.GENRES,FilterTypes.TAGS,FilterTypes.FORMATS].includes(action.type)) {
+        if( data.includes(action.payload) && data.length <= 1) 
+            filterCollection.splice(filterCollection.indexOf(action.type),1)
+        else if(!filterCollection.includes(action.type))
+            filterCollection.push(action.type);
+        return
+    }
+    if(!action.payload)
+        filterCollection.splice(filterCollection.indexOf(action.type),1)
+    else if(!filterCollection.includes(action.type))
+        filterCollection.push(action.type);
+
 }
 export {INITIAL_STATE,FilterTypes,filterReducer};
