@@ -17,7 +17,6 @@ export default function FilterOption() {
                 <p>{FilterTypes.YEAR + " : " + state.year}</p>
                 <p>{FilterTypes.SEASON + " : " + state.season}</p>
                 <p>{FilterTypes.GENRES + " : " + state.genres.join(',')}</p>
-                <p>{FilterTypes.TAGS + " : " + state.tags.join(',')}</p>
                 <p>{FilterTypes.FORMATS + " : " + state.formats.join(',')}</p>
                 <p>{FilterTypes.STATUS + " : " + state.status}</p>
             </div>

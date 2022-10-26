@@ -14,7 +14,6 @@ let INITIAL_STATE = {
     year: 0,
     season:"",
     formats:[],
-    tags:[],
     genres:[],
     status:"",
     filterCollection : []
@@ -25,10 +24,7 @@ const filterReducer = (state,action) => {
     const filter = action.type.toLowerCase();
 
     handleFilterCollection(state,action)
-    if( action.type === FilterTypes.GENRES || 
-        action.type === FilterTypes.TAGS || 
-        action.type === FilterTypes.FORMATS
-    ) {
+    if( action.type === FilterTypes.GENRES || action.type === FilterTypes.FORMATS) {
         let collection = updateCollection(state[filter],action.payload); 
         return {
             ...state,
@@ -58,7 +54,7 @@ function handleFilterCollection (state,action) {
     let data = state[filter];
     let filterCollection = state.filterCollection;
 
-    if ([FilterTypes.GENRES,FilterTypes.TAGS,FilterTypes.FORMATS].includes(action.type)) {
+    if ([FilterTypes.GENRES,FilterTypes.FORMATS].includes(action.type)) {
         if( data.includes(action.payload) && data.length <= 1) 
             filterCollection.splice(filterCollection.indexOf(action.type),1)
         else if(!filterCollection.includes(action.type))
