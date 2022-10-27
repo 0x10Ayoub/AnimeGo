@@ -3,6 +3,7 @@ import { useState,useRef,useEffect } from "react";
 import { joinClassName } from "../../utils/joinClassName";
 import SingleOptionDropdown from "./SingleOptionDropDown";
 import getStatus from "../../api/getMediaStatus";
+import { FilterTypes } from "../FilterReducer";
 export default function StatusFilter({ FilterType, dispatchFilter, state, className }) {
 
     const [dropDownActive, SetDropDown] = useState(false);
@@ -29,30 +30,26 @@ export default function StatusFilter({ FilterType, dispatchFilter, state, classN
    }, [StatusCollection])
 
     useEffect(() => {
+        searchInputRef.current.value = state.status?.toLowerCase().replace(RegExp("_","g")," ");
         document.addEventListener("mouseup", HandleDropDwon);
         function HandleDropDwon(e) {
             if (!selectRef.current || !selectRef.current.contains(e.target))
             {
                 let isDropdownActive = e.target.isSameNode(searchInputRef.current);
                 SetDropDown(isDropdownActive);
-                if(!isDropdownActive && state.mediastatus)
-                {
+                if(!isDropdownActive && state.status)
                     setStatusFilter("");
-                    searchInputRef.current.value = state.mediastatus?.toLowerCase().replace(RegExp("_","g")," ");
-                }
             }
         }
         return () => {
             document.removeEventListener("mouseup", HandleDropDwon);
         }
-    }, [dropDownActive,state.mediastatus])
+    }, [dropDownActive,state.status])
 
 
-    function handleClick(e) {
-        let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
-        if(value === null) return;
-        dispatchFilter({ type: FilterType, payload: value });
-        searchInputRef.current.value = value?.toLowerCase().replace(RegExp("_","g")," ");
+    function handleOnClick(payload,operation) {
+        let type = FilterTypes.STATUS;
+        dispatchFilter({ type, payload,operation });
         SetDropDown(false);
     }
 
@@ -65,7 +62,7 @@ export default function StatusFilter({ FilterType, dispatchFilter, state, classN
             <label className="block" htmlFor="Status">Airing Status</label>
             <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="mediaStatus" onChange={handleInputChange} className="block  capitalize p-2  w-48 rounded outline-none bg-gray-100 text-primary-blue  drop-shadow-md" />
             {dropDownActive &&
-                <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={AiringFilter} selectedValue={state.status} GetData={()=>StatusCollection}/>
+                <SingleOptionDropdown ref={selectRef} handleOnClick={handleOnClick} filterValue={AiringFilter} selectedValue={state.status} GetData={()=>StatusCollection}/>
             }
         </div>
 

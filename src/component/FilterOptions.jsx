@@ -10,6 +10,7 @@ import ActivefilterCollection from "./filterOptions/ActivefilterCollection";
 
 export default function FilterOption() {
     const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
+
     return (
         <div className="container  m-auto mt-10">
             <div>

@@ -13,16 +13,14 @@ export default function SeasonFilter({ FilterType, dispatchFilter, state, classN
 
     useEffect(() => {
         document.addEventListener("mouseup", HandleDropDwon);
+        searchInputRef.current.value = state.season;
         function HandleDropDwon(e) {
             if (!selectRef.current || !selectRef.current.contains(e.target))
             {
                 let isDropdownActive = e.target.isSameNode(searchInputRef.current);
                 SetDropDown(isDropdownActive);
                 if(!isDropdownActive && state.season)
-                {
                     setSeasonFilter("");
-                    searchInputRef.current.value = state.season;
-                }
             }
         }
         return () => {
@@ -31,13 +29,13 @@ export default function SeasonFilter({ FilterType, dispatchFilter, state, classN
     }, [dropDownActive,state.season])
 
 
-    function handleClick(e) {
-        let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
-        if(value === null || value === undefined  ) return;
-        dispatchFilter({ type: FilterType, payload: value });
+    function handleOnClick(payload,operation) {
+
+        let type = FilterTypes.SEASON;
+        dispatchFilter({ type, payload, operation});
         if(!state.year)
             dispatchFilter({ type: FilterTypes.YEAR, payload: new Date().getFullYear().toString() });
-        searchInputRef.current.value = value;
+        searchInputRef.current.value = payload;
         SetDropDown(false);
     }
 
@@ -50,7 +48,7 @@ export default function SeasonFilter({ FilterType, dispatchFilter, state, classN
             <label className="block" htmlFor="season">Season</label>
             <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={SetSeasonFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
-                <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={seasonFilter} selectedValue={state.season} GetData={GetSeason}/>
+                <SingleOptionDropdown ref={selectRef} handleOnClick={handleOnClick} filterValue={seasonFilter} selectedValue={state.season} GetData={GetSeason}/>
             }
         </div>
 

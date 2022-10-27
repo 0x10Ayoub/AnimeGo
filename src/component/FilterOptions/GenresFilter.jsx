@@ -1,9 +1,9 @@
 
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getGenresCollection from "../../api/getGenresCollection";
 import { joinClassName } from "../../utils/joinClassName";
 import SingleOption from "./SingleOption";
-import { FilterTypes } from "../FilterReducer";
+import { FilterTypes, OperationTypes } from "../FilterReducer";
 import BadgeCollection from "./SingleBadgeCollection";
 export default function GenresFilter({ dispatchFilter, state, className }) {
 
@@ -51,15 +51,11 @@ export default function GenresFilter({ dispatchFilter, state, className }) {
     }, [dropDownActive, state.genres])
 
 
-    function handleClick(e) {
-        let payload = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value", 3);
-        if (!payload) return;
+    function handleClick(payload, operation) {
         let type = FilterTypes.GENRES
-
-        dispatchFilter({ type, payload });
+        dispatchFilter({ type, payload ,operation});
         setGenresSearch("");
         setIsSearchAtive(false);
-        //SetDropDown(false);
     }
 
 
@@ -73,13 +69,13 @@ export default function GenresFilter({ dispatchFilter, state, className }) {
             <div className="relative">
                 <input ref={searchInputRef} type="search" placeholder={state.genres.length ? " " : "Any"} autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                 {
-                    !isSearchActive && <BadgeCollection collection={state.genres} onClick={handleClick} />
+                    !isSearchActive && <BadgeCollection collection={state.genres} onClick={() => handleClick(state.genres[0], OperationTypes.DELETE)} />
                 }
             </div>
             {dropDownActive &&
-                <div ref={selectRef} onClick={handleClick} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
+                <div ref={selectRef} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
                     {
-                        Object.keys(genresCollection).map(key => <OptionWithGroup key={key} item={key}/>)
+                        Object.keys(genresCollection).map(key => <OptionWithGroup key={key} item={key} />)
 
                     }
                 </div>
@@ -87,26 +83,30 @@ export default function GenresFilter({ dispatchFilter, state, className }) {
         </div>
 
     )
-    function OptionWithGroup({item}) {
-
+    function OptionWithGroup({ item }) {
+        function mapValue(value) {
+            if (typeof value == "object")
+                return value.name;
+            return value;
+        }
+        function GetOperationtype(val){
+            return !state.genres.includes(val) ? OperationTypes.ADD : OperationTypes.DELETE;
+        }
         return (
             <>
-                <span className="block w-full font-bold text-left pl-6 capitalize "> {item}</span>
+                <span className="block w-full font-bold text-left pl-6 capitalize"> {item}</span>
                 {
-                    genresCollection[item].filter(val => (!genresSearch || (GetValue(val)).toLowerCase().includes(genresSearch)))
-                    .map((val) => <SingleOption key={GetValue(val)} value={GetValue(val)}
-                        isActiveBadge={state.genres.includes(GetValue(val))} />)
+                    genresCollection[item]
+                        .filter(val => (!genresSearch || (mapValue(val)).toLowerCase().includes(genresSearch)))
+                        .map((val) => <SingleOption onClick={() => handleClick(mapValue(val), GetOperationtype(val))} key={mapValue(val)}
+                            value={mapValue(val)} isActiveBadge={state.genres.includes(mapValue(val))} />)
                 }
             </>
         )
     }
 }
 
-function GetValue(value){
-    if(typeof value == "object")
-        return value.name;
-    return value;
-}
+
 
 
 

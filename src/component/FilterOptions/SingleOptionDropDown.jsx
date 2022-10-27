@@ -1,14 +1,13 @@
 
 import React from "react";
 import SingleOption from "./SingleOption";
-
-function Dropdown({handleClick,filterValue,selectedValue,GetData},ref) {
+import { OperationTypes } from "../FilterReducer";
+function Dropdown({handleOnClick,filterValue,selectedValue,GetData},ref) {
 
     const collection = GetData();
     return (
-        <div ref={ref} onClick={handleClick} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
+        <div ref={ref}  className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
             {
-
                 collection.filter(filterNameOrValue)
                     .map(mapNameOrValue)
             }
@@ -23,7 +22,7 @@ function Dropdown({handleClick,filterValue,selectedValue,GetData},ref) {
     function mapNameOrValue(item) {
         var value = item.name ? item.name : item;
        
-        return <SingleOption key={value} value={value} isActiveBadge={value == selectedValue} />;
+        return <SingleOption key={value} onClick={()=>{handleOnClick(value,OperationTypes.UPDATE)}} value={value} isActiveBadge={value === selectedValue} />;
     }
 }
 

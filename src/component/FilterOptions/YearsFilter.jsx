@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { joinClassName } from "../../utils/joinClassName";
 import SingleOptionDropdown from "./SingleOptionDropDown"
-
+import { OperationTypes,FilterTypes } from "../FilterReducer";
 
 export default function YearsFilter({ FilterType, dispatchFilter, state, className }) {
 
@@ -14,8 +14,7 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
 
 
     useEffect(() => {
-        if(state.year)
-            searchInputRef.current.value = state.year
+        searchInputRef.current.value = state.year
         document.addEventListener("mouseup", HandleDropDwon);
         function HandleDropDwon(e) {
             if (!selectRef.current || !selectRef.current.contains(e.target))
@@ -35,11 +34,9 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
     }, [dropDownActive,state.year])
 
 
-    function handleClick(e) {
-        let value = e.target.getAttribute("value") || e.target.closest("span[value]")?.getAttribute("value");
-        if(value === null || undefined) return;
-        dispatchFilter({ type: FilterType, payload: value });
-        searchInputRef.current.value = value;
+    function handleOnClick(payload,operation) {
+        let type = FilterTypes.YEAR;
+        dispatchFilter({ type, payload ,operation});
         SetDropDown(false);
     }
 
@@ -52,7 +49,7 @@ export default function YearsFilter({ FilterType, dispatchFilter, state, classNa
             <label className="block" htmlFor="years">Years</label>
             <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="years" onChange={filterYear} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
-                <SingleOptionDropdown ref={selectRef} handleClick={handleClick} filterValue={yearFilter} selectedValue={state.year} GetData={yearGenerator}/>
+                <SingleOptionDropdown ref={selectRef} handleOnClick={handleOnClick} filterValue={yearFilter} selectedValue={state.year} GetData={yearGenerator}/>
             }
         </div>
 

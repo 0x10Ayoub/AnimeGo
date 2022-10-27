@@ -1,18 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FilterTypes } from '../FilterReducer';
+import { FilterTypes, OperationTypes } from '../FilterReducer';
 export default function ActivefilterCollection({ dispatchFilter, state }) {
 
-    function handleClick(e) {
-        let target = e.target.getAttribute("value") ? e.target : e.target.closest("span[type]");
-        if (target === null || target === undefined) return;
-        let payload = target.getAttribute("value");
-        if (payload === null || payload === undefined) return;
-        let type = target.getAttribute("type");
-        if([FilterTypes.FORMATS,FilterTypes.GENRES,FilterTypes.TAGS].includes(type))
-            dispatchFilter({type,payload})
+    function handleClick(type, payload) {
+        if ([FilterTypes.FORMATS, FilterTypes.GENRES].includes(type))
+            dispatchFilter({ type, payload, operation: OperationTypes.DELETE })
         else
-            dispatchFilter({type,payload:""})
+            dispatchFilter({ type, payload: "", operation: OperationTypes.DELETE })
     }
 
 
@@ -24,23 +19,24 @@ export default function ActivefilterCollection({ dispatchFilter, state }) {
             {state.filterCollection.map(mapArrayAndsingleValue)}
         </div>
     )
-    function mapArrayAndsingleValue (item) {
+
+    function mapArrayAndsingleValue(item) {
         let filter = item.toLowerCase();
         let data = state[filter];
-     
-        if([FilterTypes.GENRES,FilterTypes.TAGS,FilterTypes.FORMATS].includes(item))
-            return data.map(val => <SingeBadge onClick={handleClick} key={val} value={val} type={item} />)
-        return <SingeBadge onClick={handleClick} key={data+"-data"} value={data} type={item} />;
+
+        if ([FilterTypes.GENRES, FilterTypes.FORMATS].includes(item))
+            return data.map(val => <SingleBadge onClick={() => handleClick(item, val)} key={val} value={val} />)
+        return <SingleBadge onClick={() => handleClick(item, data)} key={data + "-data"} value={data} />;
     }
-    
+
 }
 
 
-function SingeBadge({ value, type, onClick, icon = faXmark }) {
+function SingleBadge({ value, onClick, icon = faXmark }) {
     return (
-        <span onClick={onClick} className="group block rounded-md capitalize m-1 p-1 bg-primary-blue" type={type} value={value}>
+        <span onClick={onClick} className="group block rounded-md capitalize m-1 p-1 bg-primary-blue" value={value}>
             {
-                value?.replace(RegExp("_", "g",), " ").toLowerCase()
+                value?.toString().replace(RegExp("_", "g",), " ").toLowerCase()
             }
             <FontAwesomeIcon icon={icon} className="hidden group-hover:inline ml-1 w-3 h-3" />
         </span>);
