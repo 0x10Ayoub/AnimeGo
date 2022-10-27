@@ -7,7 +7,7 @@ export default function ActivefilterCollection({ dispatchFilter, state }) {
         if ([FilterTypes.FORMATS, FilterTypes.GENRES].includes(type))
             dispatchFilter({ type, payload, operation: OperationTypes.DELETE })
         else
-            dispatchFilter({ type, payload: "", operation: OperationTypes.DELETE })
+            dispatchFilter({ type, payload: "", operation: OperationTypes.UPDATE })
     }
 
 

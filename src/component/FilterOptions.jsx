@@ -24,10 +24,10 @@ export default function FilterOption() {
             <div className="grid grid-cols-6  grid-rows-1">
                 <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} state={state}/>
                 <GenresFilter className="col-span-1 row-span-1" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state}/>
-                <YearsFilter className="col-span-1 row-span-1" FilterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
-                <SeasonFilter className="col-span-1 row-span-1" FilterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
+                <YearsFilter className="col-span-1 row-span-1" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
+                <SeasonFilter className="col-span-1 row-span-1" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
                 <FormatFilter className="col-span-1 row-span-1" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state}/>
-                <StatusFilter className="col-span-1 row-span-1" FilterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state}/>
+                <StatusFilter className="col-span-1 row-span-1" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state}/>
             </div>
             <ActivefilterCollection  FilterType={""} dispatchFilter={dispatchFilter} state={state}/>
         </div>

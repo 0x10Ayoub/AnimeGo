@@ -1,10 +1,10 @@
 
 import React from "react";
-import SingleOption from "./SingleOption";
+import SingleOption from "../SingleOption";
 import { OperationTypes } from "../FilterReducer";
-function Dropdown({handleOnClick,filterValue,selectedValue,GetData},ref) {
+function Dropdown({handleOnClick,filterValue,selectedValue,getData},ref) {
 
-    const collection = GetData();
+    const collection = getData();
     return (
         <div ref={ref}  className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
             {
