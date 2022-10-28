@@ -28,7 +28,7 @@ export default function StatusFilter(props) {
    
 
     return (
-        <DropdownInput {...props} getData={()=>StatusCollection} prefix="airing " />
+        <DropdownInput {...props} getData={()=>StatusCollection} title="Airing Status" />
 
     )
 }

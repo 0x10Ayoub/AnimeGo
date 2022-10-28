@@ -15,7 +15,7 @@ export default function OpenSearch({ dispatchFilter, className, state }) {
 
     return (
         <div className={className}>
-            <div className="m-auto text-left">Search</div>
+            <div className="block w-full font-bold text-left capitalize">Search</div>
             <div className="relative">
                 <div className="absolute z-10 w-6 h-full top-0 left-0 flex justify-center items-center  fill-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3">

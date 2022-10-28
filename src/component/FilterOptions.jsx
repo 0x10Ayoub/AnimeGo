@@ -7,27 +7,21 @@ import SeasonFilter from "./filterOptions/SeasonFilter";
 import FormatFilter from "./filterOptions/FormatFilter";
 import StatusFilter from "./filterOptions/StatusFilter";
 import ActivefilterCollection from "./filterOptions/ActivefilterCollection";
+import SliderFilter from "./filterOptions/SliderFilter";
 
 export default function FilterOption() {
     const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
 
     return (
         <div className="container  m-auto mt-10">
-            <div>
-                <p>{FilterTypes.SEARCH + " : " + state.search}</p>
-                <p>{FilterTypes.YEAR + " : " + state.year}</p>
-                <p>{FilterTypes.SEASON + " : " + state.season}</p>
-                <p>{FilterTypes.GENRES + " : " + state.genres.join(',')}</p>
-                <p>{FilterTypes.FORMATS + " : " + state.formats.join(',')}</p>
-                <p>{FilterTypes.STATUS + " : " + state.status}</p>
-            </div>
-            <div className="grid grid-cols-6  grid-rows-1">
-                <OpenSearch className="col-span-1 row-span-1" dispatchFilter={dispatchFilter} state={state}/>
-                <GenresFilter className="col-span-1 row-span-1" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state}/>
-                <YearsFilter className="col-span-1 row-span-1" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
-                <SeasonFilter className="col-span-1 row-span-1" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
-                <FormatFilter className="col-span-1 row-span-1" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state}/>
-                <StatusFilter className="col-span-1 row-span-1" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state}/>
+            <div className="flex">
+                <OpenSearch  className="" dispatchFilter={dispatchFilter} state={state}/>
+                <GenresFilter className="" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state}/>
+                <YearsFilter className="" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state}/>
+                <SeasonFilter className="" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state}/>
+                <FormatFilter className="" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state}/>
+                <StatusFilter className="" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state}/>
+                <SliderFilter className="" dispatchFilter={dispatchFilter} state={state}/>
             </div>
             <ActivefilterCollection  FilterType={""} dispatchFilter={dispatchFilter} state={state}/>
         </div>

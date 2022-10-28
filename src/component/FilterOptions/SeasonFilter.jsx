@@ -5,7 +5,7 @@ export default function SeasonFilter(props) {
     
 
     return (
-        <DropdownInput  {...props} getData={GetSeason} />
+        <DropdownInput  {...props} getData={GetSeason} title="Season" />
 
     )
 }

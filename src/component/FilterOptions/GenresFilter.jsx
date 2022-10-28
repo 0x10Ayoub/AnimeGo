@@ -28,7 +28,7 @@ export default function GenresFilter({ dispatchFilter, state, className }) {
 
 
     return (
-        <MultiOptionDropdownInput filterType={FilterTypes.GENRES}
+        <MultiOptionDropdownInput filterType={FilterTypes.GENRES} title="Genres"
             dispatchFilter={dispatchFilter} data={state.genres} className={className} 
             getData={()=>genresCollection}
             />

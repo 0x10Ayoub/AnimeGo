@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils";
-
 const FilterTypes = Object.freeze({
     SEARCH: "SEARCH",
     YEAR: "YEAR",
@@ -8,6 +6,9 @@ const FilterTypes = Object.freeze({
     TAGS: "TAGS",
     GENRES: "GENRES",
     STATUS: "STATUS",
+    STREAMS:"STREAMS",
+    COUNTRY:"COUNTRY",
+    SOURCE:"SOURCE"
 });
 const OperationTypes = { ADD: "ADD", DELETE: "DELETE", UPDATE: "UPDATE" }
 let INITIAL_STATE = {
@@ -17,6 +18,9 @@ let INITIAL_STATE = {
     formats: [],
     genres: [],
     status: "",
+    streams:[],
+    country:"",
+    source:"",
     filterCollection: []
 }
 
@@ -25,7 +29,7 @@ const filterReducer = (state, action) => {
     const filter = action.type.toLowerCase();
     const newState = { ...state }
 
-    if (action.type === FilterTypes.GENRES || action.type === FilterTypes.FORMATS)
+    if ( [FilterTypes.GENRES,FilterTypes.FORMATS,FilterTypes.STREAMS].includes(action.type))
         newState[filter] = updateCollection(state[filter], action.payload, action.operation)
     else if (action.type in FilterTypes)
         newState[filter] = action.payload
@@ -49,7 +53,7 @@ function handleFilterCollection(state, action) {
     const filter = action.type.toLowerCase();
     let data = state[filter];
     let filterCollection = state.filterCollection;
-    let isRemove = ([FilterTypes.GENRES, FilterTypes.FORMATS].includes(action.type) && data.length == 0)
+    let isRemove = ([FilterTypes.GENRES, FilterTypes.FORMATS,FilterTypes.STREAMS].includes(action.type) && data.length == 0)
         || !action.payload;
     let hasTypeInCollection = filterCollection.includes(action.type);
     
@@ -57,7 +61,5 @@ function handleFilterCollection(state, action) {
         filterCollection.splice(filterCollection.indexOf(action.type), 1)
     else if (!isRemove && !hasTypeInCollection)
         filterCollection.push(action.type);
-    console.log(filterCollection)
-
 }
 export { INITIAL_STATE, FilterTypes, OperationTypes, filterReducer };

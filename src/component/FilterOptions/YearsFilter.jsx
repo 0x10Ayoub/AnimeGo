@@ -8,7 +8,7 @@ export default function YearsFilter(props) {
    
     return (
         
-        <DropdownInput  {...props} getData={yearGenerator}/>
+        <DropdownInput  {...props} getData={yearGenerator} title="Year"/>
     )
 }
 

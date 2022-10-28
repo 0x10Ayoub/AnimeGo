@@ -30,7 +30,7 @@ export default function FormatFilter({ dispatchFilter, state, className }) {
    
     return (
        
-        <MultiOptionDropdownInput filterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} data={state.formats}  className={className}
+        <MultiOptionDropdownInput title="Formats" filterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} data={state.formats}  className={className}
             getData={()=>formatsCollection}
         />
     )

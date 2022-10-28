@@ -4,7 +4,7 @@ import { FilterTypes, OperationTypes } from '../FilterReducer';
 export default function ActivefilterCollection({ dispatchFilter, state }) {
 
     function handleClick(type, payload) {
-        if ([FilterTypes.FORMATS, FilterTypes.GENRES].includes(type))
+        if ([FilterTypes.FORMATS, FilterTypes.GENRES,FilterTypes.STREAMS].includes(type))
             dispatchFilter({ type, payload, operation: OperationTypes.DELETE })
         else
             dispatchFilter({ type, payload: "", operation: OperationTypes.UPDATE })
@@ -24,7 +24,7 @@ export default function ActivefilterCollection({ dispatchFilter, state }) {
         let filter = item.toLowerCase();
         let data = state[filter];
 
-        if ([FilterTypes.GENRES, FilterTypes.FORMATS].includes(item))
+        if ([FilterTypes.GENRES, FilterTypes.FORMATS,FilterTypes.STREAMS].includes(item))
             return data.map(val => <SingleBadge onClick={() => handleClick(item, val)} key={val} value={val} />)
         return <SingleBadge onClick={() => handleClick(item, data)} key={data + "-data"} value={data} />;
     }

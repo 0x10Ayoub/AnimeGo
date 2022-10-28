@@ -3,7 +3,8 @@ import BadgeCollection from "./SingleBadgeCollection";
 import { OperationTypes } from "./FilterReducer";
 import SingleOption from "./SingleOption";
 import { joinClassName } from "../utils/joinClassName";
-export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData }) {
+
+export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData ,title}) {
 
     const [dropDownActive, SetDropDown] = useState(false);
     const [inputSearch, setInputSearch] = useState("");
@@ -48,7 +49,7 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
 
     return (
         <div className={joinClassName(className, "relative m-auto")}>
-            <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filterType}>{filterType.toString().toLowerCase()}</label>
+            <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filterType}>{title}</label>
             <div className="relative">
                 <input ref={searchInputRef} type="search" placeholder={data.length ? " " : "Any"} autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                 {
@@ -66,13 +67,11 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
     
 }
 
-
-
 function mapCollection(collection,inputSearch,handleClick,data){
     if(!collection) return;
     if(Array.isArray(collection))
-        return collection.filter(item => (!inputSearch || item.name.toString().toLowerCase().includes(inputSearch)))
-            .map((item) => hanldeSingelOpetion(item.name, data, handleClick))
+        return collection.filter(item => (!inputSearch || mapValue(item).toString().toLowerCase().includes(inputSearch)))
+            .map((item) => hanldeSingelOpetion(mapValue(item), data, handleClick))
     return Object.keys(collection).map(item => <OptionWithGroup key={item} {...{item,data,inputSearch,collection,handleClick}}/>)
 }
 
@@ -85,9 +84,7 @@ function hanldeSingelOpetion(value, arr, handleClick) {
 }
 
 function OptionWithGroup({ item ,data,inputSearch,collection,handleClick}) {
-    function mapValue(value) {
-        return value.name ? value.name : value;
-    }
+
     function GetOperationtype(val) {
         return !data.includes(mapValue(val)) ? OperationTypes.ADD : OperationTypes.DELETE;
     }
@@ -102,4 +99,8 @@ function OptionWithGroup({ item ,data,inputSearch,collection,handleClick}) {
             }
         </>
     )
+}
+
+function mapValue(value) {
+    return value.name ? value.name : value;
 }

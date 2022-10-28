@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { joinClassName } from "../utils/joinClassName";
 import SingleOptionDropdown from "./filterOptions/SingleOptionDropDown";
-export default function DropdownInput({ filterType, dispatchFilter, state, className, getData, prefix = "" }) {
+export default function DropdownInput({ filterType, dispatchFilter, state, className, getData, title}) {
 
 
     const [dropDownActive, SetDropDown] = useState(false);
@@ -41,7 +41,7 @@ export default function DropdownInput({ filterType, dispatchFilter, state, class
 
     return (
         <div className={joinClassName(className, "relative m-auto")}>
-            <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filter}>{prefix + filter}</label>
+            <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filter}>{title}</label>
             <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={setInputFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {dropDownActive &&
                 <SingleOptionDropdown ref={selectRef} handleOnClick={handleOnClick} filterValue={inputSearch} selectedValue={state[filter]} getData={getData} />
@@ -53,5 +53,6 @@ export default function DropdownInput({ filterType, dispatchFilter, state, class
 }
 
 function formatValue(value){
-    return value?.toString().toLowerCase().replace(RegExp("_", "g"), " ");
+    if(!value) return "";
+    return value.toString().toLowerCase().replace(RegExp("_", "g"), " ");
 }
