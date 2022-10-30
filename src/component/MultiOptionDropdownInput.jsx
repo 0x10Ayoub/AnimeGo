@@ -3,10 +3,13 @@ import BadgeCollection from "./SingleBadgeCollection";
 import { OperationTypes } from "./FilterReducer";
 import SingleOption from "./SingleOption";
 import { joinClassName } from "../utils/joinClassName";
+import useOnBlur from "./useOnBlur";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData ,title}) {
+export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData, title }) {
 
-    const [dropDownActive, SetDropDown] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [inputSearch, setInputSearch] = useState("");
     const collection = getData();
     const [isSearchActive, setIsSearchAtive] = useState(false)
@@ -15,30 +18,14 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
 
 
 
-    useEffect(() => {
-        document.addEventListener("mouseup", HandleDropDwon);
-        function HandleDropDwon(e) {
-            let target = e.target;
-            if (!selectRef.current || !selectRef.current.contains(target)) {
-                let isDropdownActive = target.isSameNode(searchInputRef.current) ||
-                    searchInputRef.current.parentNode === target.closest("div[data-value]")?.parentNode;
-                setIsSearchAtive(target.isSameNode(searchInputRef.current))
-                SetDropDown(isDropdownActive);
-                if (!isDropdownActive && data.length) {
-                    setIsSearchAtive(false);
-                }
-            }
-        }
-        return () => {
-            document.removeEventListener("mouseup", HandleDropDwon);
-        }
-    }, [dropDownActive, data])
+    useOnBlur(selectRef, setIsOpen, isOpen)
 
 
     function handleClick(payload, operation) {
         let type = filterType
         dispatchFilter({ type, payload, operation });
         setInputSearch("");
+        searchInputRef.current.value = ""
         setIsSearchAtive(false);
     }
 
@@ -48,31 +35,44 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
     }
 
     return (
-        <div className={joinClassName(className, "relative m-auto")}>
+        <div className={joinClassName(className, "relative m-auto")} onClick={() => setIsOpen(true)}>
             <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filterType}>{title}</label>
             <div className="relative">
-                <input ref={searchInputRef} type="search" placeholder={data.length ? " " : "Any"} autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+                <input ref={searchInputRef} type="search" placeholder={data.length ? " " : "Any"}
+                    onClick={() => setIsSearchAtive(true)}
+                    onBlur={() => setIsSearchAtive(false)}
+                    autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                 {
                     !isSearchActive && <BadgeCollection collection={data} onClick={() => handleClick(data[0], OperationTypes.DELETE)} />
                 }
             </div>
-            {dropDownActive &&
-                <div ref={selectRef} className="mt-1 w-full  absolute max-h-96 h-fit scroll overflow-y-scroll bg-white text-gray-600">
-                    {mapCollection(collection,inputSearch,handleClick,data)}
+            {isOpen &&
+                <div className="fixed z-50 flex flex-col justify-center top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-80
+                        md:absolute md:block md:rounded-md md:mt-2 md:bg-transparent md:h-96 md:top-[calc(100%+5px)]
+                        " >
+                    <div className=" p-1 flex justify-between  text-white ml-auto mr-auto mb-3 w-[90%] md:hidden">
+                        <span className="block font-semibold  text-lg uppercase">{title}</span>
+                        <FontAwesomeIcon className="block h-7" icon={faMinus} />
+                    </div>
+                    <div ref={selectRef} className="ml-auto mr-auto w-[90%] h-fit max-h-[60%] rounded-md  overflow-y-scroll bg-white text-gray-600
+                            md:w-full  md:max-h-full  
+                            ">
+                        {mapCollection(collection, inputSearch, handleClick, data)}
+                    </div>
                 </div>
             }
         </div>
 
     )
-    
+
 }
 
-function mapCollection(collection,inputSearch,handleClick,data){
-    if(!collection) return;
-    if(Array.isArray(collection))
+function mapCollection(collection, inputSearch, handleClick, data) {
+    if (!collection) return;
+    if (Array.isArray(collection))
         return collection.filter(item => (!inputSearch || mapValue(item).toString().toLowerCase().includes(inputSearch)))
             .map((item) => hanldeSingelOpetion(mapValue(item), data, handleClick))
-    return Object.keys(collection).map(item => <OptionWithGroup key={item} {...{item,data,inputSearch,collection,handleClick}}/>)
+    return Object.keys(collection).map(item => <OptionWithGroup key={item} {...{ item, data, inputSearch, collection, handleClick }} />)
 }
 
 function hanldeSingelOpetion(value, arr, handleClick) {
@@ -83,7 +83,7 @@ function hanldeSingelOpetion(value, arr, handleClick) {
     )
 }
 
-function OptionWithGroup({ item ,data,inputSearch,collection,handleClick}) {
+function OptionWithGroup({ item, data, inputSearch, collection, handleClick }) {
 
     function GetOperationtype(val) {
         return !data.includes(mapValue(val)) ? OperationTypes.ADD : OperationTypes.DELETE;

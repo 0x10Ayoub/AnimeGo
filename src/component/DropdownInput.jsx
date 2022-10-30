@@ -1,38 +1,28 @@
 import { useState, useRef, useEffect } from "react";
 import { joinClassName } from "../utils/joinClassName";
 import SingleOptionDropdown from "./filterOptions/SingleOptionDropDown";
+import useOnBlur from "./useOnBlur";
 export default function DropdownInput({ filterType, dispatchFilter, state, className, getData, title}) {
 
 
-    const [dropDownActive, SetDropDown] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [inputSearch, setInputSearch] = useState(0);
     const filter = filterType.toString().toLowerCase();
     const searchInputRef = useRef();
     const selectRef = useRef();
 
+    useOnBlur(selectRef,setIsOpen,isOpen);
+
     useEffect(() => {
         searchInputRef.current.value = formatValue(state[filter]);
-        document.addEventListener("mouseup", HandleDropDwon);
-        function HandleDropDwon(e) {
-            if (!selectRef.current || !selectRef.current.contains(e.target)) {
-                let isDropdownActive = e.target.isSameNode(searchInputRef.current);
-                SetDropDown(isDropdownActive);
-                if (!isDropdownActive && state[filter])
-                    setInputSearch("");
-            }
-        }
-        return () => {
-            document.removeEventListener("mouseup", HandleDropDwon);
-        }
-    }, [dropDownActive, filter, state])
-
+    }, [filter, state])
 
     function handleOnClick(payload, operation) {
 
         let type = filterType;
         dispatchFilter({ type, payload, operation });
         searchInputRef.current.value = payload;
-        SetDropDown(false);
+        setIsOpen(false);
     }
 
     function setInputFilter(e) {
@@ -40,11 +30,11 @@ export default function DropdownInput({ filterType, dispatchFilter, state, class
     }
 
     return (
-        <div className={joinClassName(className, "relative m-auto")}>
+        <div className={joinClassName(className, "relative m-auto")} onClick={()=>{setIsOpen(true)}}>
             <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filter}>{title}</label>
             <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={setInputFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
-            {dropDownActive &&
-                <SingleOptionDropdown ref={selectRef} handleOnClick={handleOnClick} filterValue={inputSearch} selectedValue={state[filter]} getData={getData} />
+            {isOpen &&
+                <SingleOptionDropdown label={title} ref={selectRef} handleOnClick={handleOnClick} filterValue={inputSearch} selectedValue={state[filter]} getData={getData} />
             }
         </div>
 
