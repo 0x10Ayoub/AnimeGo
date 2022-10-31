@@ -10,14 +10,16 @@ import CountryFilter from "./filterOptions/CountryFilter";
 import StreamingFilter from "./filterOptions/StreamingFilter";
 import MediaSourceFilter from "./filterOptions/MediaSourceFilter";
 import ActivefilterCollection from "./filterOptions/ActivefilterCollection";
-import OtherFilters from "./filterOptions/OtherFilters";
+import OtherFilters from "./OtherFilters";
 import useOnBlur from "./useOnBlur";
+
 export default function FilterOption() {
     const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef();
-    // useOnBlur(selectRef, setIsOpen, isOpen);
-
+    
+    useOnBlur(selectRef, setIsOpen, isOpen);
+    
     function toggle(e) {
         setIsOpen(!isOpen);
     }
@@ -33,16 +35,16 @@ export default function FilterOption() {
                 <OtherFilters className="flex justify-end items-end relative m-2 ml-auto" onClick={toggle} isOpen={isOpen} />
             </div>
             {isOpen &&
-                <div className="w-full  rounded-md lg:absolute lg:bg-slate-50 lg:w-[70vw] xl:w-[50vw] lg:right-3 2xl:mr-[100px]" ref={selectRef}>
+                <div className="w-full  rounded-md  lg:shadow-gray-200/20 lg:shadow-lg lg:absolute lg:bg-white lg:w-[70%] xl:w-[50%] lg:right-3 2xl:mr-[100px]" ref={selectRef}>
                     <div className="flex max-w-full overflow-x-scroll overflow-y-hidden pb-[600px] -mb-[600px] m-auto p-2">
                         <GenresFilter className="m-2 block lg:hidden" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state} />
                         <YearsFilter className="m-2 block lg:hidden" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state} />
                         <SeasonFilter className="m-2  block lg:hidden" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state} />
-                        <FormatFilter className="m-2 block xl:hidden" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
-                        <StatusFilter className="m-2 block lg:hidden" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
-                        <StreamingFilter className="m-2" filterType={FilterTypes.STREAMS} dispatchFilter={dispatchFilter} state={state} />
-                        <CountryFilter className="m-2" filterType={FilterTypes.COUNTRY} dispatchFilter={dispatchFilter} state={state} />
-                        <MediaSourceFilter className="m-2" filterType={FilterTypes.SOURCE} dispatchFilter={dispatchFilter} state={state} />
+                        <FormatFilter className="m-2 block lg:hidden" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
+                        <StatusFilter className="m-2 block xl:hidden" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
+                        <StreamingFilter className="m-2 flex-1" filterType={FilterTypes.STREAMS} dispatchFilter={dispatchFilter} state={state} />
+                        <CountryFilter className="m-2 flex-1" filterType={FilterTypes.COUNTRY} dispatchFilter={dispatchFilter} state={state} />
+                        <MediaSourceFilter className="m-2 flex-1" filterType={FilterTypes.SOURCE} dispatchFilter={dispatchFilter} state={state} />
                     </div>
                 </div>
             }

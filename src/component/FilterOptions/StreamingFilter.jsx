@@ -28,7 +28,7 @@ export default function StreamingFilter({ dispatchFilter, state, className }) {
     return (
        
         <MultiOptionDropdownInput title="Streaming On" filterType={FilterTypes.STREAMS} dispatchFilter={dispatchFilter} data={state.streams}  className={className}
-            getData={()=>streamingCollection}
+            getData={()=>streamingCollection } inputClassName="shadow-none lg:bg-gray-200"
         />
     )
 }

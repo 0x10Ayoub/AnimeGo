@@ -4,7 +4,7 @@ export default function CountryFilter(props) {
     
 
     return (
-        <DropdownInput  {...props} getData={getCountry}  title="Country Of origin"/>
+        <DropdownInput  {...props} getData={getCountry}  title="Country Of origin" inputClassName="shadow-none lg:bg-gray-200"/>
 
     )
 }

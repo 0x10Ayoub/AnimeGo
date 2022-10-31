@@ -28,7 +28,7 @@ export default function MediaSourceFilter(props) {
    
 
     return (
-        <DropdownInput {...props} getData={()=>SourceCollection} title="Media Source" />
+        <DropdownInput {...props} getData={()=>SourceCollection} title="Media Source" inputClassName="shadow-none lg:bg-gray-200"/>
 
     )
 }

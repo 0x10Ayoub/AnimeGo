@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import BadgeCollection from "./SingleBadgeCollection";
 import { OperationTypes } from "./FilterReducer";
 import SingleOption from "./SingleOption";
@@ -7,7 +7,7 @@ import useOnBlur from "./useOnBlur";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
-export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData, title }) {
+export default function MultiOptionDropdownInput({ filterType, dispatchFilter, data, className, getData, title ,inputClassName=""}) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [inputSearch, setInputSearch] = useState("");
@@ -36,18 +36,20 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
 
     return (
         <div className={joinClassName(className, "relative m-auto")} onClick={() => setIsOpen(true)}>
-            <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filterType}>{title}</label>
+            <label className="block capitalize text-left pl-2 font-semibold text-gray-a-900" htmlFor={filterType}>{title}</label>
             <div className="relative">
                 <input ref={searchInputRef} type="search" placeholder={data.length ? " " : "Any"}
                     onClick={() => setIsSearchAtive(true)}
                     onBlur={() => setIsSearchAtive(false)}
-                    autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-40 lg:w-42 xl:w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+                    autoComplete="off" name="Genres" onChange={setTagsGenreSearch} 
+                    className={"block p-2  w-40 lg:w-42 xl:w-48 rounded outline-none shadow-gray-200/60 shadow-lg "+inputClassName} />
                 {
                     !isSearchActive && <BadgeCollection collection={data} onClick={() => handleClick(data[0], OperationTypes.DELETE)} />
                 }
             </div>
             {isOpen &&
                 <div className="fixed z-50 flex flex-col justify-center top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-80
+                        lg:w-42 xl:w-48
                         md:absolute md:block md:rounded-md md:mt-2 md:bg-transparent md:h-96 md:top-[calc(100%+5px)]
                         " >
                     <div className=" p-1 flex justify-between  text-white ml-auto mr-auto mb-3 w-[90%] md:hidden">
