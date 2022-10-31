@@ -1,4 +1,4 @@
-import { useReducer, useState, useRef } from "react"
+import { useReducer, useState, useRef, useEffect } from "react"
 import OpenSearch from "./filterOptions/OpenSearch"
 import { INITIAL_STATE, filterReducer, FilterTypes } from "./FilterReducer"
 import YearsFilter from "./filterOptions/YearsFilter";
@@ -10,17 +10,19 @@ import CountryFilter from "./filterOptions/CountryFilter";
 import StreamingFilter from "./filterOptions/StreamingFilter";
 import MediaSourceFilter from "./filterOptions/MediaSourceFilter";
 import ActivefilterCollection from "./filterOptions/ActivefilterCollection";
-import OtherFilters from "./OtherFilters";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import useOnBlur from "./useOnBlur";
 
 export default function FilterOption() {
     const [state, dispatchFilter] = useReducer(filterReducer, INITIAL_STATE);
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef();
-    
-    useOnBlur(selectRef, setIsOpen, isOpen);
-    
+
+    useOnBlur(selectRef, setIsOpen, isOpen,["toggle-btn"]);
+
     function toggle(e) {
+        e.stopPropagation();
         setIsOpen(!isOpen);
     }
     return (
@@ -32,7 +34,11 @@ export default function FilterOption() {
                 <SeasonFilter className="m-2  hidden lg:block" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state} />
                 <FormatFilter className="m-2 hidden lg:block" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
                 <StatusFilter className="m-2 hidden xl:block" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
-                <OtherFilters className="flex justify-end items-end relative m-2 ml-auto" onClick={toggle} isOpen={isOpen} />
+                <div  className="flex justify-end items-end relative m-2 ml-auto">
+                    <button id="toggle-btn" onClick={toggle} className="block w-10 h-10 bg-slate-50 drop-shadow rounded-lg">
+                        <FontAwesomeIcon className={`${isOpen ? "text-primary-blue" : ""} w-4 h-4`} icon={faSliders} />
+                    </button>
+                </div>
             </div>
             {isOpen &&
                 <div className="w-full  rounded-md  lg:shadow-gray-200/20 lg:shadow-lg lg:absolute lg:bg-white lg:w-[70%] xl:w-[50%] lg:right-3 2xl:mr-[100px]" ref={selectRef}>
