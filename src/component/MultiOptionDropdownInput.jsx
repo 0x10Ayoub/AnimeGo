@@ -41,7 +41,7 @@ export default function MultiOptionDropdownInput({ filterType, dispatchFilter, d
                 <input ref={searchInputRef} type="search" placeholder={data.length ? " " : "Any"}
                     onClick={() => setIsSearchAtive(true)}
                     onBlur={() => setIsSearchAtive(false)}
-                    autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
+                    autoComplete="off" name="Genres" onChange={setTagsGenreSearch} className="block p-2  w-40 lg:w-42 xl:w-48 rounded outline-none bg-gray-100 drop-shadow-md" />
                 {
                     !isSearchActive && <BadgeCollection collection={data} onClick={() => handleClick(data[0], OperationTypes.DELETE)} />
                 }

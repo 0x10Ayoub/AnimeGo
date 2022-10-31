@@ -32,7 +32,7 @@ export default function DropdownInput({ filterType, dispatchFilter, state, class
     return (
         <div className={joinClassName(className, "relative m-auto")} onClick={()=>{setIsOpen(true)}}>
             <label className="block capitalize text-left pl-2 font-semibold text-gray-800" htmlFor={filter}>{title}</label>
-            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={setInputFilter} className="block p-2  w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
+            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" name="season" onChange={setInputFilter} className="block p-2  w-40 lg:w-42 xl:w-48 rounded outline-none text-primary-blue bg-gray-100 drop-shadow-md" />
             {isOpen &&
                 <SingleOptionDropdown label={title} ref={selectRef} handleOnClick={handleOnClick} filterValue={inputSearch} selectedValue={state[filter]} getData={getData} />
             }

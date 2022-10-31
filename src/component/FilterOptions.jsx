@@ -22,23 +22,23 @@ export default function FilterOption() {
         setIsOpen(!isOpen);
     }
     return (
-        <div className="container  m-auto mt-10 ">
+        <div className="container  m-auto mt-10 2xl:pl-[100px] 2xl:pr-[100px] relative">
             <div className="flex max-w-full overflow-x-scroll p-2 overflow-y-hidden pb-[600px] -mb-[600px]">
-                <OpenSearch className="m-2 flex-1" dispatchFilter={dispatchFilter} state={state} />
+                <OpenSearch className="m-2 flex-1 lg:flex-none md:block" dispatchFilter={dispatchFilter} state={state} />
                 <GenresFilter className="m-2 hidden lg:block" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state} />
                 <YearsFilter className="m-2 hidden lg:block" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state} />
                 <SeasonFilter className="m-2  hidden lg:block" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state} />
                 <FormatFilter className="m-2 hidden lg:block" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
-                <StatusFilter className="m-2 hidden lg:block" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
-                <OtherFilters onClick={toggle} isOpen={isOpen} />
+                <StatusFilter className="m-2 hidden xl:block" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
+                <OtherFilters className="flex justify-end items-end relative m-2 ml-auto" onClick={toggle} isOpen={isOpen} />
             </div>
             {isOpen &&
-                <div className="w-full  rounded-md" ref={selectRef}>
+                <div className="w-full  rounded-md lg:absolute lg:bg-slate-50 lg:w-[70vw] xl:w-[50vw] lg:right-3 2xl:mr-[100px]" ref={selectRef}>
                     <div className="flex max-w-full overflow-x-scroll overflow-y-hidden pb-[600px] -mb-[600px] m-auto p-2">
                         <GenresFilter className="m-2 block lg:hidden" FilterType={FilterTypes.GENRES} dispatchFilter={dispatchFilter} state={state} />
                         <YearsFilter className="m-2 block lg:hidden" filterType={FilterTypes.YEAR} dispatchFilter={dispatchFilter} state={state} />
                         <SeasonFilter className="m-2  block lg:hidden" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state} />
-                        <FormatFilter className="m-2 block lg:hidden" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
+                        <FormatFilter className="m-2 block xl:hidden" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
                         <StatusFilter className="m-2 block lg:hidden" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
                         <StreamingFilter className="m-2" filterType={FilterTypes.STREAMS} dispatchFilter={dispatchFilter} state={state} />
                         <CountryFilter className="m-2" filterType={FilterTypes.COUNTRY} dispatchFilter={dispatchFilter} state={state} />
