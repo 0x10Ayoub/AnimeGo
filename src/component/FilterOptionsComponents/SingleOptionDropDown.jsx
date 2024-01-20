@@ -4,6 +4,8 @@ import SingleOption from "../SingleOption";
 import { OperationTypes } from "../FilterReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+
+
 function Dropdown({ handleOnClick, filterValue, selectedValue, getData, label = "label" }, ref) {
 
     const collection = getData();
@@ -40,7 +42,7 @@ function Dropdown({ handleOnClick, filterValue, selectedValue, getData, label = 
             e.stopPropagation();
             handleOnClick(value, OperationTypes.UPDATE)
         }}
-        value={value} isActiveBadge={value === selectedValue} />;
+            value={value} isActiveBadge={value === selectedValue} />;
     }
 }
 

@@ -1,15 +1,19 @@
 import { useReducer, useState, useRef, useEffect } from "react"
-import OpenSearch from "./filterOptions/OpenSearch"
+
 import { INITIAL_STATE, filterReducer, FilterTypes } from "./FilterReducer"
-import YearsFilter from "./filterOptions/YearsFilter";
-import GenresFilter from "./filterOptions/GenresFilter";
-import SeasonFilter from "./filterOptions/SeasonFilter";
-import FormatFilter from "./filterOptions/FormatFilter";
-import StatusFilter from "./filterOptions/StatusFilter";
-import CountryFilter from "./filterOptions/CountryFilter";
-import StreamingFilter from "./filterOptions/StreamingFilter";
-import MediaSourceFilter from "./filterOptions/MediaSourceFilter";
-import ActivefilterCollection from "./filterOptions/ActivefilterCollection";
+import {
+    OpenSearch,
+    YearsFilter,
+    GenresFilter,
+    SeasonFilter,
+    FormatFilter,
+    StatusFilter,
+    CountryFilter,
+    StreamingFilter,
+    MediaSourceFilter,
+    ActivefilterCollection
+} from "./FilterOptionsComponents"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import useOnBlur from "./useOnBlur";
@@ -19,7 +23,7 @@ export default function FilterOption() {
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef();
 
-    useOnBlur(selectRef, setIsOpen, isOpen,["toggle-btn"]);
+    useOnBlur(selectRef, setIsOpen, isOpen, ["toggle-btn"]);
 
     function toggle(e) {
         e.stopPropagation();
@@ -34,7 +38,7 @@ export default function FilterOption() {
                 <SeasonFilter className="m-2  hidden lg:block" filterType={FilterTypes.SEASON} dispatchFilter={dispatchFilter} state={state} />
                 <FormatFilter className="m-2 hidden lg:block" FilterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} state={state} />
                 <StatusFilter className="m-2 hidden xl:block" filterType={FilterTypes.STATUS} dispatchFilter={dispatchFilter} state={state} />
-                <div  className="flex justify-end items-end relative m-2 ml-auto">
+                <div className="flex justify-end items-end relative m-2 ml-auto">
                     <button id="toggle-btn" onClick={toggle} className="block w-10 h-10 bg-slate-50 drop-shadow rounded-lg">
                         <FontAwesomeIcon className={`${isOpen ? "text-primary-blue" : ""} w-4 h-4`} icon={faSliders} />
                     </button>

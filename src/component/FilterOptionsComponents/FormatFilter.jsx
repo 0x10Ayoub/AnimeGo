@@ -7,7 +7,7 @@ import { FilterTypes, OperationTypes } from "../FilterReducer";
 import BadgeCollection from "../SingleBadgeCollection";
 import MultiOptionDropdownInput from "../MultiOptionDropdownInput";
 
-export default function FormatFilter({ dispatchFilter, state, className }) {
+export function FormatFilter({ dispatchFilter, state, className }) {
     const [formatsCollection, setformatsCollection] = useState([]);
 
     useEffect(() => {
@@ -27,11 +27,11 @@ export default function FormatFilter({ dispatchFilter, state, className }) {
 
     }, [formatsCollection])
 
-   
+
     return (
-       
-        <MultiOptionDropdownInput title="Formats" filterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} data={state.formats}  className={className}
-            getData={()=>formatsCollection}
+
+        <MultiOptionDropdownInput title="Formats" filterType={FilterTypes.FORMATS} dispatchFilter={dispatchFilter} data={state.formats} className={className}
+            getData={() => formatsCollection}
         />
     )
 }

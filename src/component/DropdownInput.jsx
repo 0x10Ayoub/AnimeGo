@@ -1,17 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { joinClassName } from "../utils/joinClassName";
-import SingleOptionDropdown from "./filterOptions/SingleOptionDropDown";
+import SingleOptionDropdown from "./FilterOptionsComponents/SingleOptionDropDown";
 import useOnBlur from "./useOnBlur";
-export default function DropdownInput({ filterType, dispatchFilter, state, className, getData, title,inputClassName = ""}) {
+export default function DropdownInput({ filterType, dispatchFilter, state, className, getData, title, inputClassName = "" }) {
 
 
     const [isOpen, setIsOpen] = useState(false);
     const [inputSearch, setInputSearch] = useState(0);
     const filter = filterType.toString().toLowerCase();
     const searchInputRef = useRef();
-    
+
     const selectRef = useRef();
-    useOnBlur(selectRef,setIsOpen,isOpen);
+    useOnBlur(selectRef, setIsOpen, isOpen);
 
     useEffect(() => {
         searchInputRef.current.value = formatValue(state[filter]);
@@ -30,20 +30,20 @@ export default function DropdownInput({ filterType, dispatchFilter, state, class
     }
 
     return (
-        <div className={joinClassName(className, "relative m-auto")} onClick={()=>{setIsOpen(true)}}>
+        <div className={joinClassName(className, "relative m-auto")} onClick={() => { setIsOpen(true) }}>
             <label className="block capitalize text-left pl-2 font-semibold text-gray-a-900" htmlFor={filter}>{title}</label>
-            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off"  onChange={setInputFilter} 
-                    className= {" block p-2 w-40 lg:w-42 xl:w-48 rounded outline-none bg-white text-primary-blue shadow-gray-200/60 shadow-lg "+inputClassName} />
+            <input ref={searchInputRef} type="search" placeholder="Any" autoComplete="off" onChange={setInputFilter}
+                className={" block p-2 w-40 lg:w-42 xl:w-48 rounded outline-none bg-white text-primary-blue shadow-gray-200/60 shadow-lg " + inputClassName} />
             {isOpen &&
                 <SingleOptionDropdown label={title} ref={selectRef} handleOnClick={handleOnClick} filterValue={inputSearch} selectedValue={state[filter]} getData={getData} />
             }
-        </div> 
+        </div>
 
     )
 
 }
 
-function formatValue(value){
-    if(!value) return "";
+function formatValue(value) {
+    if (!value) return "";
     return value.toString().toLowerCase().replace(RegExp("_", "g"), " ");
 }

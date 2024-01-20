@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import getGenresCollection from "../../api/getGenresCollection";
 import { FilterTypes } from "../FilterReducer";
 import MultiOptionDropdownInput from "../MultiOptionDropdownInput";
-export default function GenresFilter({ dispatchFilter, state, className }) {
 
+
+export function GenresFilter({ dispatchFilter, state, className }) {
     const [genresCollection, setGenresCollection] = useState(null);
-
 
     useEffect(() => {
         if (genresCollection !== null) return;
@@ -29,9 +29,9 @@ export default function GenresFilter({ dispatchFilter, state, className }) {
 
     return (
         <MultiOptionDropdownInput filterType={FilterTypes.GENRES} title="Genres"
-            dispatchFilter={dispatchFilter} data={state.genres} className={className} 
-            getData={()=>genresCollection}
-            />
+            dispatchFilter={dispatchFilter} data={state.genres} className={className}
+            getData={() => genresCollection}
+        />
     )
 
 }

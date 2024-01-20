@@ -3,15 +3,14 @@ import React from "react";
 import DropdownInput from "../DropdownInput"
 
 
-export default function YearsFilter(props) {
+export function YearsFilter(props) {
 
-   
+
     return (
-        
-        <DropdownInput  {...props} getData={yearGenerator} title="Year"/>
+
+        <DropdownInput  {...props} getData={yearGenerator} title="Year" />
     )
 }
-
 
 
 function yearGenerator() {

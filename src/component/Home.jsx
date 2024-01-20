@@ -8,7 +8,7 @@ function Home() {
 
     return (
         <div className='m-auto '>
-            {/* { <NavBar /> } */}
+            <NavBar />
             <TopFive />
             <FilterOption />
             <TrendingNow />
